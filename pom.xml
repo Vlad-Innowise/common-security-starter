@@ -7,6 +7,14 @@
     <groupId>by.innowise.internship</groupId>
     <artifactId>common-security-starter</artifactId>
     <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <distributionManagement>
+        <repository>
+            <id>innowise-common</id>
+            <url>https://maven.pkg.github.com/Vlad-Innowise/common-security-starter</url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
