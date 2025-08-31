@@ -24,7 +24,6 @@
         <spring-boot.version>3.5.3</spring-boot.version>
         <lombok.version>1.18.38</lombok.version>
         <maven.compiler.version>3.14.0</maven.compiler.version>
-        <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
         <jjwt.version>0.13.0</jjwt.version>
         <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
     </properties>
@@ -107,26 +106,6 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot-maven-plugin.version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
