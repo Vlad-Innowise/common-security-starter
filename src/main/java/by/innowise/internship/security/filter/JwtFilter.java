@@ -8,20 +8,37 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 @RequiredArgsConstructor
+@Slf4j
 public class JwtFilter extends OncePerRequestFilter {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String JWT_AUTH_HEADER_PREFIX = "Bearer ";
     private final JwtHandler jwtHandler;
+    private final AntPathMatcher matcher = new AntPathMatcher();
+    @Setter
+    private List<String> whitelistPaths = Collections.emptyList();
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getServletPath();
+        boolean isFiltered = whitelistPaths.stream().anyMatch(urlPattern -> matcher.match(urlPattern, path));
+        log.info("Filtering path: {}, method:{},  shouldNotFilter: {}", path, request.getMethod(), isFiltered);
+        return isFiltered;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,

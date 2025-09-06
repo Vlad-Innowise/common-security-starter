@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtHandlerImpl implements JwtHandler {
 
-    private static final String EMAIL_CLAIM = "email";
     private final JwtParser jwtParser;
 
     @Override
@@ -22,7 +21,7 @@ public class JwtHandlerImpl implements JwtHandler {
         Claims claims = jwtParser.parseSignedClaims(token)
                                  .getPayload();
 
-        List<?> rawRoles = claims.get("roles", List.class);
+        List<?> rawRoles = claims.get(JwtConstants.JWT_ROLE_CLAIM_NAME, List.class);
         List<SimpleGrantedAuthority> roles = rawRoles.stream()
                                                      .filter(String.class::isInstance)
                                                      .map(String.class::cast)
@@ -30,7 +29,7 @@ public class JwtHandlerImpl implements JwtHandler {
                                                      .toList();
         return new TokenDto(
                 Long.parseLong(claims.getSubject()),
-                claims.get(EMAIL_CLAIM, String.class),
+                claims.get(JwtConstants.JWT_EMAIL_CLAIM_NAME, String.class),
                 roles);
     }
 
