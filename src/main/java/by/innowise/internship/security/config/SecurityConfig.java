@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 @Configuration
@@ -28,8 +27,8 @@ public class SecurityConfig {
 
     @Bean
     public SecretKey secretKey(JwtSecurityProperties jwtProps) {
-        String secretKey = jwtProps.getSecretKey();
-        return Keys.hmacShaKeyFor(Base64.getDecoder().decode(secretKey.getBytes(StandardCharsets.UTF_8)));
+        String secretKeyBase64Url = jwtProps.getSecretKey();
+        return Keys.hmacShaKeyFor(Base64.getDecoder().decode(secretKeyBase64Url));
     }
 
     @Bean
