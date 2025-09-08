@@ -28,7 +28,7 @@ public class SecurityConfig {
     @Bean
     public SecretKey secretKey(JwtSecurityProperties jwtProps) {
         String secretKeyBase64Url = jwtProps.getSecretKey();
-        return Keys.hmacShaKeyFor(Base64.getDecoder().decode(secretKeyBase64Url));
+        return Keys.hmacShaKeyFor(Base64.getUrlDecoder().decode(secretKeyBase64Url));
     }
 
     @Bean
