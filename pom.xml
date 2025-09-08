@@ -11,7 +11,7 @@
 
     <distributionManagement>
         <repository>
-            <id>innowise-common</id>
+            <id>innowise-security-starter</id>
             <url>https://maven.pkg.github.com/Vlad-Innowise/common-security-starter</url>
         </repository>
     </distributionManagement>
